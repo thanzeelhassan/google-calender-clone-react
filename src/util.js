@@ -21,7 +21,7 @@ export function getMonth(month = dayjs().month()) {
 export function getWeek(month = dayjs().month()) {
   const year = dayjs().year();
 
-  const firstDayOfTheMonth = dayjs(new Date(year, month, 1)).day();
+  // const firstDayOfTheMonth = dayjs(new Date(year, month, 1)).day();
   let WeekOfYear = dayjs().week();
   // console.log("Week = ", WeekOfYear);
   let middleOfTheCurrentWeek = dayjs().week(WeekOfYear);

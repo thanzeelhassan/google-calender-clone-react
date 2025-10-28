@@ -1,5 +1,5 @@
 import React from "react";
-import Day from "./Day";
+// import Day from "./Day";
 
 import Hour from "./Hour";
 export default function Week({ week }) {
