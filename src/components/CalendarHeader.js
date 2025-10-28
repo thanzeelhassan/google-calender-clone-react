@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import logo from "../assets/logo.png";
 import GlobalContext from "../context/GlobalContext";
 
@@ -20,14 +20,14 @@ export default function CalendarHeader(props) {
         : dayjs().month()
     );
   }
-  const options = [
-    { value: "Day", label: "Day" },
-    { value: "Week", label: "Week" },
-    { value: "Month", label: "Month" },
-    { value: "Year", label: "Year" },
-    { value: "Schedule", label: "Schedule" },
-    { value: "4 days", label: "4 days" },
-  ];
+  // const options = [
+  //   { value: "Day", label: "Day" },
+  //   { value: "Week", label: "Week" },
+  //   { value: "Month", label: "Month" },
+  //   { value: "Year", label: "Year" },
+  //   { value: "Schedule", label: "Schedule" },
+  //   { value: "4 days", label: "4 days" },
+  // ];
 
   return (
     <header className="px-4 py-2 flex items-center">
