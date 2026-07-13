@@ -4,6 +4,7 @@ import GlobalContext from "../context/GlobalContext";
 
 export default function Day({ day, rowIdx }) {
   const {
+    monthIndex,
     setDaySelected,
     setShowEventModal,
     filteredEvents,
@@ -25,15 +26,17 @@ export default function Day({ day, rowIdx }) {
       : "";
   }
 
+  const isCurrentMonth = day.month() === monthIndex;
+
   return (
-    <div className="border border-gray-200 flex flex-col">
+    <div className={`border border-gray-200 flex flex-col transition-all ${!isCurrentMonth ? "bg-gray-50/60" : ""}`}>
       <header className="flex flex-col items-center">
         {rowIdx === 0 && (
-          <p className="text-sm mt-1 text-center">
+          <p className={`text-sm mt-1 text-center font-bold ${!isCurrentMonth ? "text-gray-400" : "text-gray-500"}`}>
             {day.format("ddd").toUpperCase()}
           </p>
         )}
-        <p className={`text-sm p-1 my-1 text-center ${getCurrentDayClass()}`}>
+        <p className={`text-sm p-1 my-1 text-center ${getCurrentDayClass()} ${!isCurrentMonth ? "text-gray-400 font-light" : "text-gray-700 font-semibold"}`}>
           {day.format("DD")}
         </p>
       </header>

@@ -32,12 +32,14 @@ export default function SmallCalendar() {
       return "bg-blue-500 rounded-full text-white";
     } else if (currDay === slcDay) {
       return "bg-blue-100 rounded-full text-blue-600 font-bold";
+    } else if (day.month() !== currentMonthIdx) {
+      return "text-gray-300 pointer-events-auto cursor-pointer";
     } else {
-      return "";
+      return "text-gray-500 font-semibold";
     }
   }
   return (
-    <div className="mt-9">
+    <div className="mt-16">
       <header className="flex justify-between">
         <p className="text-gray-500 font-bold">
           {dayjs(new Date(dayjs().year(), currentMonthIdx)).format("MMMM YYYY")}

@@ -7,26 +7,29 @@ import Month from "./components/Month";
 import GlobalContext from "./context/GlobalContext";
 import EventModal from "./components/EventModal";
 import Week from "./components/Week";
+import DayView from "./components/DayView";
 function App() {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   const [currentWeek, setCurrentWeek] = useState(getWeek());
-  const { monthIndex, showEventModal } = useContext(GlobalContext);
+  const { showEventModal, daySelected } = useContext(GlobalContext);
 
   useEffect(() => {
-    setCurrentMonth(getMonth(monthIndex));
-  }, [monthIndex]);
+    setCurrentMonth(getMonth(daySelected));
+  }, [daySelected]);
 
   useEffect(() => {
-    setCurrentWeek(getWeek(monthIndex));
-  }, [monthIndex]);
+    setCurrentWeek(getWeek(daySelected));
+  }, [daySelected]);
 
-  const [weekOrMonth, setWeekOrMonth] = useState("Month");
+  const [calendarView, setCalendarView] = useState("Month");
 
-  function toggleWeekOrMonth() {
-    if (weekOrMonth === "Month") {
-      setWeekOrMonth("Week");
+  function toggleCalendarView() {
+    if (calendarView === "Month") {
+      setCalendarView("Week");
+    } else if (calendarView === "Week") {
+      setCalendarView("Day");
     } else {
-      setWeekOrMonth("Month");
+      setCalendarView("Month");
     }
   }
 
@@ -36,17 +39,15 @@ function App() {
 
       <div className="h-screen flex flex-col">
         <CalendarHeader
-          toggleWeekOrMonth={toggleWeekOrMonth}
-          weekOrMonth={weekOrMonth}
+          toggleCalendarView={toggleCalendarView}
+          calendarView={calendarView}
         />
 
         <div className="flex flex-1">
           <Sidebar />
-          {weekOrMonth === "Month" ? (
-            <Month month={currentMonth} />
-          ) : (
-            <Week week={currentWeek} />
-          )}
+          {calendarView === "Month" && <Month month={currentMonth} />}
+          {calendarView === "Week" && <Week week={currentWeek} />}
+          {calendarView === "Day" && <DayView />}
         </div>
       </div>
     </React.Fragment>
