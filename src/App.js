@@ -11,15 +11,15 @@ import DayView from "./components/DayView";
 function App() {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   const [currentWeek, setCurrentWeek] = useState(getWeek());
-  const { monthIndex, showEventModal } = useContext(GlobalContext);
+  const { showEventModal, daySelected } = useContext(GlobalContext);
 
   useEffect(() => {
-    setCurrentMonth(getMonth(monthIndex));
-  }, [monthIndex]);
+    setCurrentMonth(getMonth(daySelected));
+  }, [daySelected]);
 
   useEffect(() => {
-    setCurrentWeek(getWeek(monthIndex));
-  }, [monthIndex]);
+    setCurrentWeek(getWeek(daySelected));
+  }, [daySelected]);
 
   const [calendarView, setCalendarView] = useState("Month");
 

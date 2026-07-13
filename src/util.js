@@ -3,11 +3,22 @@ import dayjs from "dayjs";
 var weekOfYear = require("dayjs/plugin/weekOfYear");
 dayjs.extend(weekOfYear);
 
-export function getMonth(month = dayjs().month()) {
-  const year = dayjs().year();
+export function getMonth(monthOrDay = dayjs()) {
+  let day;
+  if (dayjs.isDayjs(monthOrDay)) {
+    day = monthOrDay;
+  } else if (typeof monthOrDay === "number") {
+    day = dayjs().month(monthOrDay);
+  } else {
+    day = dayjs(monthOrDay);
+  }
+
+  const year = day.year();
+  const month = day.month();
 
   const firstDayOfTheMonth = dayjs(new Date(year, month, 1)).day();
-  let currentMonthCount = 0 - firstDayOfTheMonth;
+  const dayIndex = (firstDayOfTheMonth + 6) % 7;
+  let currentMonthCount = 0 - dayIndex;
 
   const daysMatrix = new Array(5).fill([]).map(() => {
     return new Array(7).fill(null).map(() => {
@@ -18,25 +29,19 @@ export function getMonth(month = dayjs().month()) {
   return daysMatrix;
 }
 
-export function getWeek(month = dayjs().month()) {
-  const year = dayjs().year();
+export function getWeek(monthOrDay = dayjs()) {
+  let day;
+  if (dayjs.isDayjs(monthOrDay)) {
+    day = monthOrDay;
+  } else if (typeof monthOrDay === "number") {
+    day = dayjs().month(monthOrDay);
+  } else {
+    day = dayjs(monthOrDay);
+  }
 
-  // const firstDayOfTheMonth = dayjs(new Date(year, month, 1)).day();
-  let WeekOfYear = dayjs().week();
-  // console.log("Week = ", WeekOfYear);
-  let middleOfTheCurrentWeek = dayjs().week(WeekOfYear);
-  let b = middleOfTheCurrentWeek.date();
-  let a = middleOfTheCurrentWeek.day();
-  let currentMonthCount = b - a - 1;
-
-  // console.log(dayjs().week(1));
-  // console.log(dayjs().week(2));
-  // console.log(dayjs().week(3));
-  // console.log(dayjs().week(WeekOfYear));
-  // returns wednesday
-  const daysMatrix = new Array(7).fill([]).map(() => {
-    currentMonthCount++;
-    return dayjs(new Date(year, month, currentMonthCount));
+  const startOfWeek = day.day() === 0 ? day.subtract(6, "day") : day.subtract(day.day() - 1, "day");
+  const daysMatrix = new Array(7).fill(null).map((_, i) => {
+    return startOfWeek.add(i, "day");
   });
   return daysMatrix;
 }

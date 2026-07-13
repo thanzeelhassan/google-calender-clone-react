@@ -65,6 +65,12 @@ export default function ContextWrapper(props) {
   }, [smallCalendarMonth]);
 
   useEffect(() => {
+    if (daySelected) {
+      setMonthIndex(daySelected.month());
+    }
+  }, [daySelected]);
+
+  useEffect(() => {
     if (!showEventModal) {
       setSelectedEvent(null);
     }

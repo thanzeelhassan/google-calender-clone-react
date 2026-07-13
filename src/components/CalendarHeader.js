@@ -4,35 +4,29 @@ import logo from "../assets/logo.png";
 import GlobalContext from "../context/GlobalContext";
 
 export default function CalendarHeader(props) {
-  const { monthIndex, setMonthIndex, daySelected, setDaySelected } = useContext(GlobalContext);
+  const { daySelected, setDaySelected } = useContext(GlobalContext);
   const { toggleCalendarView, calendarView } = props;
 
   function handlePrev() {
     if (calendarView === "Day") {
-      const newDay = daySelected.subtract(1, "day");
-      setDaySelected(newDay);
-      setMonthIndex(newDay.month());
+      setDaySelected(daySelected.subtract(1, "day"));
+    } else if (calendarView === "Week") {
+      setDaySelected(daySelected.subtract(1, "week"));
     } else {
-      setMonthIndex(monthIndex - 1);
+      setDaySelected(daySelected.subtract(1, "month"));
     }
   }
   function handleNext() {
     if (calendarView === "Day") {
-      const newDay = daySelected.add(1, "day");
-      setDaySelected(newDay);
-      setMonthIndex(newDay.month());
+      setDaySelected(daySelected.add(1, "day"));
+    } else if (calendarView === "Week") {
+      setDaySelected(daySelected.add(1, "week"));
     } else {
-      setMonthIndex(monthIndex + 1);
+      setDaySelected(daySelected.add(1, "month"));
     }
   }
   function handleReset() {
-    const today = dayjs();
-    setDaySelected(today);
-    setMonthIndex(
-      monthIndex === today.month()
-        ? monthIndex + Math.random()
-        : today.month()
-    );
+    setDaySelected(dayjs());
   }
 
   return (
@@ -55,7 +49,7 @@ export default function CalendarHeader(props) {
       <h2 className="ml-4 text-xl text-black-500 font-bold">
         {calendarView === "Day"
           ? daySelected.format("MMMM DD, YYYY")
-          : dayjs(new Date(dayjs().year(), monthIndex)).format("MMMM YYYY")}
+          : daySelected.format("MMMM YYYY")}
       </h2>
 
       <div className="ml-auto">
