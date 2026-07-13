@@ -1,0 +1,5 @@
+Start the server locally : npm start
+
+Install dependencies : npm install
+
+Build : npm run build
