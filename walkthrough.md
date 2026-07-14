@@ -19,6 +19,7 @@ The application compiles perfectly and supports both **Production Google Authent
 
 ### 4. UI Layout and Styling
 - Implemented a clean Google Sign-in button with the official Google logo inside `src/components/CalendarHeader.js`.
+- Replaced the static `logo.png` image (which was hardcoded to display "9th") with a dynamic calendar logo component that retrieves and displays the actual current date and month abbreviation in real-time.
 - Added a premium floating profile dropdown card inside `src/components/CalendarHeader.js` showing:
   - User's Google Avatar/Profile picture
   - User's Full Name

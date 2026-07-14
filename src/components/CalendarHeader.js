@@ -1,6 +1,5 @@
 import dayjs from "dayjs";
 import React, { useContext, useState, useRef, useEffect } from "react";
-import logo from "../assets/logo.png";
 import GlobalContext from "../context/GlobalContext";
 import { useGoogleLogin } from "@react-oauth/google";
 
@@ -78,7 +77,15 @@ export default function CalendarHeader(props) {
 
   return (
     <header className="px-4 py-2 flex items-center border-b border-gray-200">
-      <img src={logo} alt="calender" className="mr-2 w-12 h-12" />
+      {/* Dynamic Calendar Logo */}
+      <div className="relative w-10 h-10 mr-3 flex flex-col border-2 border-blue-600 rounded-lg overflow-hidden shadow-sm select-none">
+        <div className="bg-blue-600 text-white text-[8px] font-extrabold text-center uppercase tracking-wider py-0.5 leading-none">
+          {dayjs().format("MMM")}
+        </div>
+        <div className="flex-1 bg-white flex items-center justify-center text-blue-600 font-extrabold text-base leading-none">
+          {dayjs().date()}
+        </div>
+      </div>
       <h1 className="mr-10 text-xl text-gray-500 font-bold">Calendar</h1>
       <button onClick={handleReset} className="border rounded py-2 px-4 mr-5 hover:bg-gray-50 transition-all">
         Today
