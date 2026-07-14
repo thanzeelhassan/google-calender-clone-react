@@ -27,6 +27,10 @@ export default function ContextWrapper(props) {
   const [showEventModal, setShowEventModal] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [labels, setLabels] = useState([]);
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem("googleUser");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
   const [savedEvents, dispatchCalEvent] = useReducer(
     savedEventsReducer,
     [],
@@ -76,6 +80,18 @@ export default function ContextWrapper(props) {
     }
   }, [showEventModal]);
 
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("googleUser", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("googleUser");
+    }
+  }, [user]);
+
+  const logout = () => {
+    setUser(null);
+  };
+
   function updateLabel(label) {
     setLabels(labels.map((lbl) => (lbl.label === label.label ? label : lbl)));
   }
@@ -98,6 +114,9 @@ export default function ContextWrapper(props) {
         labels,
         updateLabel,
         filteredEvents,
+        user,
+        setUser,
+        logout,
       }}
     >
       {props.children}
